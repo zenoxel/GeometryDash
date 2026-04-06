@@ -28,6 +28,18 @@ public class SelectIconManager : MonoBehaviour
 
     void GenerateButtons()
     {
+        if (iconGrid == null || iconButtonPrefab == null)
+        {
+            Debug.LogError("IconGrid or iconButtonPrefab not assigned!");
+            return;
+        }
+
+        Debug.Log($"GenerateButtons: iconSprites.Length = {iconSprites.Length}");
+        for (int i = 0; i < iconSprites.Length; i++)
+        {
+            Debug.Log($"  [{i}] = {(iconSprites[i] != null ? iconSprites[i].name : "NULL")}");
+        }
+
         // Xóa buttons cũ nếu có
         foreach (Transform child in iconGrid)
             Destroy(child.gameObject);
@@ -38,7 +50,14 @@ public class SelectIconManager : MonoBehaviour
         {
             GameObject obj = Instantiate(iconButtonPrefab, iconGrid);
             IconButton btn = obj.GetComponent<IconButton>();
-            btn.Setup(i, iconSprites[i], SelectIcon);
+            
+            // Verify sprite before passing
+            if (iconSprites[i] == null)
+            {
+                Debug.LogError($"GenerateButtons: iconSprites[{i}] is NULL!");
+            }
+            
+            btn.Setup(i, iconSprites[i], this);
             allButtons[i] = btn;
         }
     }
@@ -62,6 +81,8 @@ public class SelectIconManager : MonoBehaviour
 
     public void OnBackButton()
     {
-        SceneManager.LoadScene("MainMenu");
+        Debug.Log("OnBackButton clicked!");
+        // Load scene by index (0 = MainMenu)
+        SceneManager.LoadScene(0);
     }
 }
