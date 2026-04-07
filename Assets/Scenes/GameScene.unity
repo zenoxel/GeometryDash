@@ -781,13 +781,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1294135419}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f408e93c27d0d2b4ca9e125910b9dd9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3bb56daedd9ea7b4280d368128fdcf1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelLoader: {fileID: 1006813794}
-  player: {fileID: 1740940794}
-  CurrentProgress: 0
-  IsPlaying: 0
 --- !u!4 &1294135422
 Transform:
   m_ObjectHideFlags: 0
