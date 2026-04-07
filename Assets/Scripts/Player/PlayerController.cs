@@ -5,7 +5,9 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 8f;
-    public float jumpForce = 14f;
+    public float jumpForce = 16f;
+    public float lowJumpMultiplier = 1.5f;
+    public float fallMultiplier = 3f;
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -37,22 +39,43 @@ public class PlayerController : MonoBehaviour
     {
         if (_isDead || !GameManager.Instance.IsPlaying) return;
 
-        transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-
         _isGrounded = Physics2D.OverlapCircle(
             groundCheck.position, groundCheckRadius, groundLayer);
 
-        bool jump = Input.GetMouseButtonDown(0)
-                 || Input.GetKeyDown(KeyCode.Space);
+        if (_isGrounded)
+        {
+            transform.rotation = Quaternion.identity;
+            _rb.angularVelocity = 0f;
+        }
+
+        float currentAngle = transform.rotation.eulerAngles.z;
+        bool jump = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space);
 
         if (jump && _isGrounded)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
-            SFXManager.Instance?.PlayJump();
+            transform.rotation = Quaternion.identity;
         }
 
-        if (!_isGrounded)
-            transform.Rotate(0, 0, -400f * Time.deltaTime);
+        if (!_isGrounded && _rb.velocity.y < 0)
+        {
+            if (currentAngle < 90)
+                transform.Rotate(0, 0, -400f * Time.deltaTime);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (_isDead || !GameManager.Instance.IsPlaying) return;
+
+        _rb.velocity = new Vector2(moveSpeed, _rb.velocity.y);
+
+        if (_rb.velocity.y > 0)
+            _rb.gravityScale = lowJumpMultiplier;
+        else if (_rb.velocity.y < 0)
+            _rb.gravityScale = fallMultiplier;
+        else
+            _rb.gravityScale = 1f;
     }
 
     void OnTriggerEnter2D(Collider2D other)
