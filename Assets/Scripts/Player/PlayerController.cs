@@ -46,21 +46,15 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.identity;
             _rb.angularVelocity = 0f;
+            _rb.rotation = 0f;
         }
 
-        float currentAngle = transform.rotation.eulerAngles.z;
         bool jump = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space);
 
         if (jump && _isGrounded)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
             transform.rotation = Quaternion.identity;
-        }
-
-        if (!_isGrounded && _rb.velocity.y < 0)
-        {
-            if (currentAngle < 90)
-                transform.Rotate(0, 0, -400f * Time.deltaTime);
         }
     }
 
