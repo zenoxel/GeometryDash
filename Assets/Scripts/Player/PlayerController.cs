@@ -84,6 +84,11 @@ public class PlayerController : MonoBehaviour
     {
         if (_isDead) return;
         if (!col.gameObject.CompareTag("Ground")) return;
+        
+        transform.rotation = Quaternion.identity;
+        _rb.rotation = 0f;
+        _rb.angularVelocity = 0f;
+        
         foreach (var c in col.contacts)
         {
             if (Mathf.Abs(c.normal.x) > 0.7f) { Die(); return; }
