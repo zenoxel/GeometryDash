@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target;      // Player
-    public float offsetX = 2f;   // Camera chạy trước player
-    public float smoothSpeed = 0.125f;
+    public Transform target;
+    public float offsetX = 2f;
+    public float smoothSpeed = 8f;
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (target == null) return;
         
         float targetX = target.position.x + offsetX;
-        Vector3 desired = new Vector3(targetX, transform.position.y, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, desired, smoothSpeed);
+        float newX = Mathf.Lerp(transform.position.x, targetX, smoothSpeed * Time.fixedDeltaTime);
+        transform.position = new Vector3(newX, transform.position.y, transform.position.z);
     }
 }

@@ -68,7 +68,8 @@ public class PlayerController : MonoBehaviour
     {
         if (_isDead || GameManager.Instance == null || !GameManager.Instance.IsPlaying) return;
 
-        _rb.velocity = new Vector2(moveSpeed, _rb.velocity.y);
+        float desiredVelocityX = moveSpeed;
+        _rb.velocity = new Vector2(desiredVelocityX, _rb.velocity.y);
 
         if (_rb.velocity.y > 0)
             _rb.gravityScale = lowJumpMultiplier;
