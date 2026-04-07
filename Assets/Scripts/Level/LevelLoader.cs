@@ -7,6 +7,9 @@ public class LevelLoader : MonoBehaviour
     [Header("Scale — 1 Box2D unit = worldScale Unity unit")]
     public float worldScale = 0.5f;
 
+    [Header("Offset")]
+    public Vector2 offset = new Vector2(0, 10f);
+
     [Header("Sprite Mapping")]
     public SpriteMapping[] spriteMappings;
 
@@ -67,8 +70,8 @@ public class LevelLoader : MonoBehaviour
         var go = new GameObject($"{role}_{index}");
         go.transform.SetParent(transform);
         go.transform.position = new Vector3(
-            b.position.x * worldScale,
-            b.position.y * worldScale, 0);
+            b.position.x * worldScale + offset.x,
+            b.position.y * worldScale + offset.y, 0);
         go.transform.rotation =
             Quaternion.Euler(0, 0, b.angle * Mathf.Rad2Deg);
 
@@ -113,12 +116,24 @@ public class LevelLoader : MonoBehaviour
 
     void AttachSprite(GameObject go, int bodyIndex)
     {
-        if (_data.image == null) return;
+        if (_data.image == null) 
+        {
+            Debug.LogWarning("No image data in level JSON");
+            return;
+        }
+        
         foreach (var img in _data.image)
         {
             if (img.body != bodyIndex) continue;
+            
             string key = Path.GetFileNameWithoutExtension(img.file).ToLower();
-            if (!_spriteDict.TryGetValue(key, out Sprite spr)) continue;
+            Debug.Log($"Attaching sprite for body {bodyIndex}: key='{key}'");
+            
+            if (!_spriteDict.TryGetValue(key, out Sprite spr)) 
+            {
+                Debug.LogWarning($"No sprite found for key: {key}");
+                continue;
+            }
 
             var sr    = go.AddComponent<SpriteRenderer>();
             sr.sprite = spr;
@@ -126,6 +141,7 @@ public class LevelLoader : MonoBehaviour
 
             float s = img.scale * worldScale;
             go.transform.localScale = new Vector3(s, s, 1);
+            Debug.Log($"Attached sprite '{key}' to {go.name}");
             break;
         }
     }
