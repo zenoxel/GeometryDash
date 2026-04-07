@@ -22,6 +22,7 @@ public class SelectIconManager : MonoBehaviour
             go.AddComponent<IconManager>();
         }
 
+        IconManager.Instance.SetIconSprites(iconSprites);
         GenerateButtons();
         UpdatePreview();
     }
@@ -64,7 +65,8 @@ public class SelectIconManager : MonoBehaviour
 
     public void SelectIcon(int index)
     {
-        IconManager.Instance.SelectIcon(index);
+        Sprite selectedSprite = iconSprites[index];
+        IconManager.Instance.SelectIcon(index, selectedSprite);
 
         foreach (IconButton btn in allButtons)
             btn.UpdateSelectedState();
@@ -81,8 +83,8 @@ public class SelectIconManager : MonoBehaviour
 
     public void OnBackButton()
     {
-        Debug.Log("OnBackButton clicked!");
-        // Load scene by index (0 = MainMenu)
-        SceneManager.LoadScene(0);
+        Debug.Log("OnBackButton CALLED!");
+        SFXManager.Instance?.PlayClick();
+        SceneManager.LoadScene("MainMenu");
     }
 }

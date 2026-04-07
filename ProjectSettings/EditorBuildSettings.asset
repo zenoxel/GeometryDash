@@ -14,10 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SelectLevel.unity
     guid: 504e6a3f539fdc841a4118f007ca4e0b
-  - enabled: 0
-    path: Assets/Scenes/GameScene.unity
-    guid: 6184165b31f7de44aadbdc135d0eeefd
   - enabled: 1
     path: Assets/Scenes/SelectIcon.unity
     guid: 34d2e1740a8eda844a907c34a9d6ff8c
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: 6184165b31f7de44aadbdc135d0eeefd
   m_configObjects: {}

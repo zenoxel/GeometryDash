@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 629.98975, y: 0}
+  m_AnchoredPosition: {x: 501, y: 0}
   m_SizeDelta: {x: -997.78, y: 160}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &55897479
@@ -2123,7 +2123,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1648608837}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d0b32e33c2788e4bb8b9b87e3e557f2, type: 3}
+  m_Script: {fileID: 11500000, guid: e3e769c7bed9917468079779d2d5bff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   levelIcons:
@@ -2150,7 +2150,8 @@ MonoBehaviour:
   txtStarCount: {fileID: 2090840100}
   imgBarFill: {fileID: 660574880}
   txtPercent: {fileID: 190016338}
-  dots: []
+  dots:
+  - {fileID: 1466619046}
 --- !u!1 &1705690253
 GameObject:
   m_ObjectHideFlags: 0
@@ -2256,6 +2257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldScale: 0.5
+  offset: {x: 0, y: 10}
   spriteMappings:
   - key: spike
     sprite: {fileID: 21300000, guid: 90bca5a9f89bacb4c99f5f2caa90536b, type: 3}

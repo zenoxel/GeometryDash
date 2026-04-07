@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
 
     private Rigidbody2D _rb;
+    private SpriteRenderer _sr;
     private bool        _isGrounded;
     private bool        _isDead;
     private Vector3     _startPos;
@@ -22,7 +24,21 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         _rb       = GetComponent<Rigidbody2D>();
+        _sr       = GetComponent<SpriteRenderer>();
         _startPos = transform.position;
+    }
+
+    void Start()
+    {
+        ApplySelectedIcon();
+    }
+
+    void ApplySelectedIcon()
+    {
+        if (IconManager.Instance != null && IconManager.Instance.SelectedSprite != null && _sr != null)
+        {
+            _sr.sprite = IconManager.Instance.SelectedSprite;
+        }
     }
 
     public void ResetPlayer()
