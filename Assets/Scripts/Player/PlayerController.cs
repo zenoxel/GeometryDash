@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (_isDead || !GameManager.Instance.IsPlaying) return;
+        if (_isDead || GameManager.Instance == null || !GameManager.Instance.IsPlaying) return;
 
         _isGrounded = Physics2D.OverlapCircle(
             groundCheck.position, groundCheckRadius, groundLayer);
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (_isDead || !GameManager.Instance.IsPlaying) return;
+        if (_isDead || GameManager.Instance == null || !GameManager.Instance.IsPlaying) return;
 
         _rb.velocity = new Vector2(moveSpeed, _rb.velocity.y);
 
